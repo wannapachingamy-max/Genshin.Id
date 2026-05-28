@@ -6,46 +6,83 @@
     <title>CHIEL . MON - ไอดี , ฝากขายไอดี Genshin</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Mitr:wght@300;400;600&family=Chakra+Petch:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* --- สไตล์ธีม Genshin Impact & แอนิเมชันฝนดาวตก --- */
+        /* --- สไตล์ธีม Genshin Impact & แอนิเมชันฝนดาวตกพรีเมียม --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Mitr', sans-serif;
-            /* โทนสีน้ำเงินคราม ท้องฟ้ามืด และสีม่วงดวงดาวสไตล์ Genshin */
-            background: linear-gradient(135deg, #0c1424, #121a2e, #231834);
+            background: linear-gradient(135deg, #060b14, #0f172a, #1b1129);
             color: #ede7da;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
         
-        /* พื้นหลังดวงดาวระยิบระยับและฝนดาวตก */
-        .space-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
-        
-        /* ดวงดาววิบวับ */
-        .star { position: absolute; background: #fff; border-radius: 50%; opacity: 0.3; animation: twinkle ease-in-out infinite alternate; }
-        @keyframes twinkle { 0% { opacity: 0.2; transform: scale(0.8); } 100% { opacity: 0.9; transform: scale(1.2); text-shadow: 0 0 4px #fff; } }
+        /* 🌌 ระบบอวกาศและดวงดาวพรีเมียม 🌌 */
+        .space-container { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            pointer-events: none; 
+            z-index: 1; 
+            overflow: hidden; 
+        }
 
-        /* ฝนดาวตก (Shooting Stars) แนวทแยงสไตล์หน้าสุ่มกาชา */
+        /* แสงออร่าเนบิวลาช่วยให้มิติท้องฟ้านุ่มนวลขึ้น */
+        .nebula {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(98, 59, 161, 0.15) 0%, rgba(0,0,0,0) 70%);
+            top: -10%, left: 20%;
+            filter: blur(50px);
+            pointer-events: none;
+        }
+        .nebula-blue {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(46, 109, 153, 0.12) 0%, rgba(0,0,0,0) 70%);
+            bottom: 10%, right: 10%;
+            filter: blur(40px);
+            pointer-events: none;
+        }
+        
+        /* ดวงดาววิบวับแบบมีมิติ (สุ่มขนาดจาก JS) */
+        .star { 
+            position: absolute; 
+            background: #ffffff; 
+            border-radius: 50%; 
+            box-shadow: 0 0 6px #ffffff;
+            opacity: 0;
+        }
+        @keyframes twinkle-slow { 0%, 100% { opacity: 0.2; transform: scale(0.8); } 50% { opacity: 0.8; transform: scale(1.1); box-shadow: 0 0 8px rgba(255,255,255,0.8); } }
+        @keyframes twinkle-mid { 0%, 100% { opacity: 0.3; transform: scale(0.7); } 50% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 12px rgba(255,255,255,1); } }
+        @keyframes twinkle-fast { 0%, 100% { opacity: 0.1; transform: scale(0.6); } 50% { opacity: 0.9; transform: scale(1.4); box-shadow: 0 0 10px rgba(236, 195, 110, 0.9); } }
+
+        /* ฝนดาวตกสไตล์สุ่มกาชาหรูหรา (Shooting Stars) */
         .shooting-star {
             position: absolute;
-            top: -50px;
-            width: 2px;
-            height: 50px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(236, 195, 110, 1)); /* หางดาวตกสีทอง */
-            transform: rotate(-45deg);
+            top: -100px;
+            height: 2px;
+            /* หางยาวเรียวไล่เฉดสีทอง */
+            background: linear-gradient(-45deg, rgba(236, 195, 110, 0) 0%, rgba(236, 195, 110, 0.8) 50%, #ffffff 100%);
+            filter: drop-shadow(0 0 6px #ecc36e);
             opacity: 0;
-            animation: shoot linear infinite;
+            transform: rotate(-35deg); /* มุมเอียงที่ดูเป็นธรรมชาติขึ้น */
+            animation: gachaShoot 6s linear infinite;
         }
-        @keyframes shoot {
-            0% { transform: translate(0, 0) rotate(-45deg); opacity: 0; }
-            5% { opacity: 1; }
-            20% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; }
-            100% { transform: translate(-300px, 300px) rotate(-45deg); opacity: 0; }
+        @keyframes gachaShoot {
+            0% { transform: translate(0, 0) rotate(-35deg) scaleX(0); opacity: 0; }
+            10% { opacity: 1; transform: translate(-100px, 70px) rotate(-35deg) scaleX(1); }
+            30% { transform: translate(-800px, 560px) rotate(-35deg) scaleX(1); opacity: 0; }
+            100% { transform: translate(-800px, 560px) rotate(-35deg) scaleX(0); opacity: 0; }
         }
 
+        /* 👑 UI หลักของเว็บ 👑 */
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; position: relative; z-index: 2; }
         
-        /* ✨ ส่วนปรับแต่งหัวข้อร้านให้ดูหรูหราสไตล์แฟนตาซี ✨ */
         header { 
             text-align: center; 
             margin-bottom: 45px; 
@@ -55,7 +92,7 @@
             font-family: 'Cinzel', serif; 
             font-size: 2.5rem;
             font-weight: 700;
-            color: #ecc36e; /* สีทอง Signature ของ Genshin */
+            color: #ecc36e; 
             text-shadow: 0 0 15px rgba(236, 195, 110, 0.4);
             letter-spacing: 6px;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -83,13 +120,13 @@
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
         
         .product-card { 
-            background: rgba(22, 31, 51, 0.85); /* โทนน้ำเงินเข้มขรึม */
-            border: 2px solid #364460; 
+            background: rgba(18, 26, 43, 0.88); 
+            border: 2px solid #33425b; 
             border-radius: 18px; 
             padding: 20px; 
             position: relative; 
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.3s, box-shadow 0.3s, opacity 0.3s; 
-            backdrop-filter: blur(10px); 
+            backdrop-filter: blur(12px); 
             display: flex; 
             flex-direction: column;
             transform-style: preserve-3d;
@@ -98,8 +135,8 @@
         
         .product-card:hover { 
             transform: translateY(-12px) rotateX(2deg) rotateY(2deg); 
-            border-color: #ecc36e; /* ขอบเรืองแสงสีทองเมื่อชี้ */
-            box-shadow: 0 15px 35px rgba(236, 195, 110, 0.2), 0 0 20px rgba(54, 68, 96, 0.6);
+            border-color: #ecc36e; 
+            box-shadow: 0 15px 35px rgba(236, 195, 110, 0.25), 0 0 20px rgba(51, 66, 91, 0.6);
         }
 
         /* ป้ายสถานะสไตล์ Elements */
@@ -119,15 +156,15 @@
         }
         .product-card:hover .status-tag { transform: translateZ(25px) scale(1.08); }
 
-        .available { background: #3fa294; text-shadow: 0 0 5px #fff; box-shadow: 0 0 15px rgba(63, 162, 148, 0.6); } /* สีสไตล์ธาตุลม/อนิโม */
-        .sold { background: #bf5252; text-shadow: 0 0 5px #fff; box-shadow: 0 0 15px rgba(191, 82, 82, 0.6); } /* สีสไตล์ธาตุไฟ/ไพโร */
-        .reserved { background: #c29545; text-shadow: 0 0 5px #fff; box-shadow: 0 0 15px rgba(194, 149, 69, 0.6); } /* สีสไตล์ธาตุหิน/จีโอ */
-        .installments { background: #4b67bf; text-shadow: 0 0 5px #fff; box-shadow: 0 0 15px rgba(75, 103, 191, 0.6); } /* สีสไตล์ธาตุน้ำ/ไฮโดร */
+        .available { background: #3fa294; text-shadow: 0 0 5px #fff; box-shadow: 0 0 15px rgba(63, 162, 148, 0.6); } 
+        .sold { background: #bf5252; text-shadow: 0 0 5px #fff; box-shadow: 0 0 15px rgba(191, 82, 82, 0.6); } 
+        .reserved { background: #c29545; text-shadow: 0 0 5px #fff; box-shadow: 0 0 15px rgba(194, 149, 69, 0.6); } 
+        .installments { background: #4b67bf; text-shadow: 0 0 5px #fff; box-shadow: 0 0 15px rgba(75, 103, 191, 0.6); } 
 
         .product-card.card-sold { opacity: 0.65; }
         .product-card.card-sold:hover { opacity: 1; }
 
-        .img-box { width: 100%; height: 260px; background: #0b111c; border-radius: 12px; overflow: hidden; margin-bottom: 15px; border: 1px solid #28354d; transition: 0.3s; }
+        .img-box { width: 100%; height: 260px; background: #070c14; border-radius: 12px; overflow: hidden; margin-bottom: 15px; border: 1px solid #232e41; transition: 0.3s; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; transition: transform 0.5s ease; }
         .product-card:hover .img-box img { transform: scale(1.06); }
         .product-card:hover .img-box { border-color: #ecc36e; }
@@ -135,7 +172,7 @@
         .p-id { font-family: 'Chakra Petch', sans-serif; font-size: 1.3rem; color: #f5ebd5; margin-bottom: 5px; font-weight: 700; transition: 0.3s; }
         .product-card:hover .p-id { color: #fff; transform: translateZ(15px); }
         
-        .p-desc { font-size: 0.9rem; color: #cad3e3; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px; text-align: left; min-height: 60px; white-space: pre-line; margin-bottom: 15px; flex-grow: 1; transition: 0.3s; border-left: 3px solid #364460; }
+        .p-desc { font-size: 0.9rem; color: #cad3e3; background: rgba(0,0,0,0.25); padding: 10px; border-radius: 8px; text-align: left; min-height: 60px; white-space: pre-line; margin-bottom: 15px; flex-grow: 1; transition: 0.3s; border-left: 3px solid #33425b; }
         .product-card:hover .p-desc { background: rgba(0, 0, 0, 0.4); color: #fff; border-left-color: #ecc36e; }
 
         /* 🛒 ปุ่มสั่งซื้อดีไซน์สีทองหรูหรา */
@@ -180,16 +217,16 @@
         .toggle-admin { background: #ecc36e; color: #0c1424; padding: 12px 30px; border-radius: 50px; font-weight: 700; border: none; cursor: pointer; font-size: 1rem; transition: 0.3s; }
         .toggle-admin:hover { background: #fff2db; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(236, 195, 110, 0.4); }
         
-        .admin-panel { display: none; background: rgba(18, 27, 46, 0.95); border: 2px dashed #ecc36e; border-radius: 20px; padding: 30px; margin-top: 20px; text-align: left; animation: slideUp 0.4s ease-out; }
+        .admin-panel { display: none; background: rgba(18, 26, 43, 0.95); border: 2px dashed #ecc36e; border-radius: 20px; padding: 30px; margin-top: 20px; text-align: left; animation: slideUp 0.4s ease-out; }
         @keyframes slideUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
         
         .admin-panel label { display: block; margin-top: 10px; color: #ecc36e; font-size: 0.9rem; }
-        .admin-panel input, .admin-panel textarea, .admin-panel select { width: 100%; padding: 10px; margin-top: 5px; background: #0b111c; border: 1px solid #364460; color: #fff; border-radius: 5px; font-family: 'Mitr', sans-serif; transition: 0.3s; }
+        .admin-panel input, .admin-panel textarea, .admin-panel select { width: 100%; padding: 10px; margin-top: 5px; background: #070c14; border: 1px solid #33425b; color: #fff; border-radius: 5px; font-family: 'Mitr', sans-serif; transition: 0.3s; }
         .admin-panel input:focus, .admin-panel textarea:focus, .admin-panel select:focus { border-color: #ecc36e; outline: none; box-shadow: 0 0 8px rgba(236, 195, 110, 0.3); }
         .save-btn { background: #ecc36e; color: #0c1424; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; margin-top: 20px; cursor: pointer; width: 100%; font-family: 'Mitr', sans-serif; font-size: 1rem; transition: 0.2s; }
         .save-btn:hover { background: #fff2db; box-shadow: 0 0 15px #ecc36e; }
 
-        footer { text-align: center; margin-top: 60px; padding: 20px; background: rgba(0,0,0,0.4); border-radius: 20px; }
+        footer { text-align: center; margin-top: 60px; padding: 20px; background: rgba(0,0,0,0.5); border-radius: 20px; }
         .contact-link { color: #ecc36e; text-decoration: none; font-weight: 600; margin: 0 10px; transition: 0.2s; display: inline-block; }
         .contact-link:hover { transform: translateY(-2px); color: #fff; text-shadow: 0 0 8px #ecc36e; }
 
@@ -197,7 +234,7 @@
         .magic-modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 9, 16, 0.85);
+            background: rgba(4, 7, 13, 0.88);
             backdrop-filter: blur(8px);
             z-index: 1000;
             display: flex;
@@ -229,8 +266,8 @@
         .magic-popup-btn { padding: 10px 24px; font-family: 'Mitr', sans-serif; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; min-width: 100px; transition: 0.2s; }
         .magic-btn-confirm { background: #ecc36e; color: #0c1424; }
         .magic-btn-confirm:hover { background: #fff2db; box-shadow: 0 0 15px #ecc36e; transform: translateY(-2px); }
-        .magic-btn-cancel { background: #28354d; color: #cad3e3; border: 1px solid #364460; }
-        .magic-btn-cancel:hover { background: #364460; color: #fff; }
+        .magic-btn-cancel { background: #232e41; color: #cad3e3; border: 1px solid #33425b; }
+        .magic-btn-cancel:hover { background: #33425b; color: #fff; }
 
         .contact-order-box { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; text-align: left; }
         .contact-order-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 1rem; color: #fff; transition: 0.3s; transform: scale(1); }
@@ -242,8 +279,11 @@
 </head>
 <body>
 
-    <!-- เปลี่ยนบรรจุภัณฑ์เอฟเฟกต์เป็นดวงดาวและฝนดาวตก -->
-    <div class="space-container" id="spaceContainer"></div>
+    <!-- พื้นหลังดวงดาวและฝนดาวตกแบบอัปเกรด -->
+    <div class="space-container" id="spaceContainer">
+        <div class="nebula"></div>
+        <div class="nebula-blue"></div>
+    </div>
 
     <div class="container">
         <header>
@@ -299,29 +339,49 @@
     </div>
 
     <script>
-        // ระบบสร้างดวงดาวระยิบระยับและฝนดาวตกสไตล์ Genshin Impact
+        // ระบบสร้างท้องฟ้าระยิบระยับลึกมีมิติและฝนดาวตกสมจริง
         const spaceContainer = document.getElementById('spaceContainer');
         if (spaceContainer) {
-            // สร้างดวงดาวทั่วไปนิ่งๆ วิบวับ
-            for (let i = 0; i < 40; i++) {
+            // 1. สร้างกลุ่มดาวระยิบระยับสุ่มขนาดและแอนิเมชันถักทอ (รวม 60 ดวงให้ดูแน่นและวับวาบขึ้น)
+            const animTypes = ['twinkle-slow', 'twinkle-mid', 'twinkle-fast'];
+            
+            for (let i = 0; i < 65; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
-                star.style.width = Math.random() * 3 + 1 + 'px';
-                star.style.height = star.style.width;
+                
+                // สุ่มขนาดให้มีดวงเล็กดวงใหญ่สลับกัน
+                const size = Math.random() * 2.5 + 0.8;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                star.style.animationDelay = Math.random() * 3 + 's';
+                
+                // สุ่มประเภทความเร็วในการกระพริบ
+                const randomAnim = animTypes[Math.floor(Math.random() * animTypes.length)];
+                star.style.animation = `${randomAnim} ${Math.random() * 3 + 2}s ease-in-out infinite alternate`;
+                star.style.animationDelay = Math.random() * 4 + 's';
+                
                 spaceContainer.appendChild(star);
             }
-            // สร้างฝนดาวตก (Shooting Stars) วิ่งแนวทแยงลงมา
-            for (let i = 0; i < 6; i++) {
+
+            // 2. สร้างฝนดาวตกสุ่มกาชา (Shooting Stars) ทิศทางนุ่มนวล สมูทขึ้น
+            for (let i = 0; i < 5; i++) {
                 const shootingStar = document.createElement('div');
                 shootingStar.className = 'shooting-star';
-                shootingStar.style.left = (Math.random() * 80 + 20) + '%';
-                shootingStar.style.top = (Math.random() * 40) + '%';
-                shootingStar.style.animationDuration = (Math.random() * 4 + 4) + 's';
-                shootingStar.style.animationDelay = (Math.random() * 6) + 's';
+                
+                // สุ่มความยาวหางดาวตกให้ดูพริ้ว
+                const starLength = Math.random() * 80 + 70;
+                shootingStar.style.width = starLength + 'px';
+                
+                // กระจายจุดปล่อยตัวจากขอบบนขวาเฉียงลงมาซ้าย
+                shootingStar.style.left = (Math.random() * 60 + 30) + '%';
+                shootingStar.style.top = (Math.random() * 30) + '%';
+                
+                // สุ่มความเร็วและรอบเวลาตกไม่ให้พร้อมกันจนแข็งทื่อ
+                shootingStar.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                shootingStar.style.animationDelay = (Math.random() * 8) + 's';
+                
                 spaceContainer.appendChild(shootingStar);
             }
         }
